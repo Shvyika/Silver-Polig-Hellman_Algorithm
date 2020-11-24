@@ -1,0 +1,50 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 60%;
+    margin-bottom: 20px;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgb(0, 0, 0);
+}
+
+.header {
+    text-align: center;
+}
+
+.formula {
+    text-align: center;
+    font-size: 1.4em;
+}
+
+.form {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.label {
+    font-size: 1.2em;
+}
+
+.submit {
+    padding: 5px 10px 5px 10px;
+}
+
+.result {
+    display: flex;
+    align-items: center;
+    height: 50px;
+}
+
+.result_text {
+    font-size: 1.4em;
+    margin: 0;
+}

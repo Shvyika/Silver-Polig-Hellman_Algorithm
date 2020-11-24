@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="header">Silver-Polig-Hellman Algorithm</h1>
+        <p class="formula">a<sup>x</sup> = b(mod p), x = ?</p>
+        <form class="form">
+            <label class="label">
+                Enter  <b>a</b>:
+                <input type="text" id="a" required size="10">
+            </label>
+            <label class="label">
+                Enter <b>b</b>:
+                <input type="text" id="b" required size="10">
+            </label>
+            <label class="label">
+                Enter <b>p</b>:
+                <input type="text" id="p" required size="10">
+            </label>
+            <input type="submit" id="submit" class="submit" value="Submit">
+        </form>
+    </div>
+
+    <div class="container">
+        <div class="result">
+            <p id="result_text" class="result_text"></p>
+        </div>
+    </div>
+    <script src="./scripts/index.js"></script>
+    
+</body>
+</html>
