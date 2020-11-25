@@ -3,6 +3,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: rgb(243, 243, 243);
 }
 
 .container {
@@ -10,7 +11,7 @@ body {
     margin-bottom: 20px;
     padding: 5px;
     border-radius: 5px;
-    box-shadow: 0 0 5px rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
 }
 
 .header {
@@ -38,7 +39,12 @@ body {
     padding: 5px 10px 5px 10px;
 }
 
-.solution {
+.solution_header {
+    text-align: center;
+}
+
+.solution_text {
+    padding: 5px 15px 5px 15px;
     white-space: pre-wrap;
 }
 

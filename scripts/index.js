@@ -3,8 +3,10 @@ let solution = '';
 
 /*Факторизация числа*/
 const factorize = (number) => {
+    // Вывод решения
     solution += `1) Факторизация числа p - 1: <br>`;
     solution += `     p - 1 = ${number} = `;
+    // Вывод решения
 
     let rezult = [];
     if(number < 0) {
@@ -25,6 +27,7 @@ const factorize = (number) => {
         rezult.push({num: number, power: 1});
     }
 
+    // Вывод решения
     for(let i = 0; i < rezult.length; i++) {
         if(i !== rezult.length - 1) {
             solution += `${rezult[i].num}<sup>${rezult[i].power}</sup> ⋅ `
@@ -32,6 +35,8 @@ const factorize = (number) => {
             solution += `${rezult[i].num}<sup>${rezult[i].power}</sup>`
         }
     }
+    // Вывод решения
+
     return rezult;
 };
 
@@ -55,8 +60,11 @@ const modPow = (a, b, p) => {
 
 /*Подсчёт всех r*/
 const count_r = (a, p, factors) => {
+    // Вывод решения
     solution += `<br> <br>`
     solution += `2) Подсчёт всех r: <br>`; 
+    // Вывод решения
+
     let output = [];
     let temp = [];
     for(let i = 0; i < factors.length; i++) {
@@ -67,11 +75,14 @@ const count_r = (a, p, factors) => {
         temp = [];
     }
 
+    // Вывод решения
     for(let i = 0; i < output.length; i++) {
         for(let j = 0; j < output[i].length; j++) {
             solution += `     r<sub>${factors[i].num},${j}</sub> = ${a}<sup>${output[i][j].power}</sup>(mod${p}) = ${output[i][j].r} <br>`;
         }   
     }
+    // Вывод решения
+
     return output;
 };
 
@@ -95,8 +106,11 @@ const inverseMod = (x, mod) => {
 
 //Нахождение решения системы сравнений по модулю
 const find_solution = (x_array, factors) => {
+    // Вывод решения
     solution += `<br>`;
     solution += `4) Решение системы сравнений по модулю: <br>`;
+    // Вывод решения
+
     let mod = 1;
     for(let i = 0; i < factors.length; i++) {
         mod *= Math.pow(factors[i].num, factors[i].power);
@@ -114,6 +128,7 @@ const find_solution = (x_array, factors) => {
         result += (x_array[i] * M_1[i] * M_2[i]);
     }
 
+    // Вывод решения
     solution += `     x = `;
     for(let i = 0; i < factors.length; i++) {
         if(i !== factors.length - 1) {
@@ -123,16 +138,21 @@ const find_solution = (x_array, factors) => {
         }
     }
     solution += `${result % mod}`;
+    // Вывод решения
+
     return result % mod;
 };
 
 //Подсчёт x для каждого q
 const count_x = (a, b, p, factors, r_array) => {
+    // Вывод решения
     solution += `<br>`;
     solution += `3) Подсчёт промежуточных x: <br>`;
+    // Вывод решения
 
     let x_array = [];
     for(let i = 0; i < factors.length; i++) {
+        // Вывод решения
         solution += `  - q = ${factors[i].num}: <br>`;
         solution += `      x = `;
         for(let j = 0; j < factors[i].power; j++) {
@@ -143,6 +163,8 @@ const count_x = (a, b, p, factors, r_array) => {
             }    
         }
         solution += `<br>`;
+        // Вывод решения
+
         let temp_x = Array(factors[i].power).fill(0, 0, factors[i].power);
         let counter = 0;
         for(let j = 0; j < factors[i].power; j++) {
@@ -153,18 +175,28 @@ const count_x = (a, b, p, factors, r_array) => {
             let temp_1 = inverseMod(modPow(a, power, p), p);
             let temp_2 = (p - 1) / Math.pow(factors[i].num, j + 1);
             let z = modPow((b * temp_1), temp_2, p);
+
+            // Вывод решения
             solution += `       (${b} ⋅ ${a}<sup>-${power}</sup>)<sup>${p - 1}/${Math.pow(factors[i].num, j + 1)}</sup>(mod${p}) = `;
             solution += `(${b} ⋅ ${temp_1})<sup>${temp_2}</sup>(mod${p}) = ${z} `;
+            // Вывод решения
+
             for(let k = 0; k < r_array[i].length; k++) {
                 if(z === r_array[i][k].r) {
                     let temp_3 = r_array[i][k].power / ((p - 1) / factors[i].num);
                     temp_x[counter] = temp_3;
-                    solution += `=> x<sub>${j}</sub> = ${r_array[i][k].power} / ${(p - 1) / factors[i].num} = ${temp_3} <br>`
+
+                    // Вывод решения
+                    solution += `=> x<sub>${j}</sub> = ${r_array[i][k].power} / ${(p - 1) / factors[i].num} = ${temp_3} <br>`;
+                    // Вывод решения
+
                     break;
                 }
             }  
             counter++;
         }
+
+        // Вывод решения
         solution += `      x = `;
         let x = 0;
         for(let j = 0; j < temp_x.length; j++) {
@@ -175,6 +207,8 @@ const count_x = (a, b, p, factors, r_array) => {
                 solution += `${Math.pow(factors[i].num, j)}⋅${temp_x[j]} (mod${Math.pow(factors[i].num, factors[i].power)}) = ${x} <br>`;
             }  
         }
+        // Вывод решения
+
         x_array.push(x % Math.pow(factors[i].num, factors[i].power));
     }
     return x_array;
@@ -197,10 +231,11 @@ document.getElementById('submit').onclick = (event) => {
 
     if(a && b && p) {
         const x = SPH(a, b, p);
-        document.getElementById('solution').innerHTML = `<center><b>Ход решения:</b></center> <br>${solution}`;
+        document.getElementById('solution_text').innerHTML = solution;
         solution = '';
         document.getElementById('result_text').innerHTML = `Ответ: x = ${x}`;
     } else {
+        alert('Заполните поля!');
         return;
     }
 };
