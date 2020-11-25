@@ -38,14 +38,19 @@ body {
     padding: 5px 10px 5px 10px;
 }
 
+.solution {
+    white-space: pre-wrap;
+}
+
 .result {
     display: flex;
     align-items: center;
+    justify-content: center;
     height: 50px;
 }
 
 .result_text {
-    font-size: 1.4em;
+    font-size: 1.5em;
     margin: 0;
 }
 

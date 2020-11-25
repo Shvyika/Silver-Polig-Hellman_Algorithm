@@ -1,5 +1,11 @@
+//Инициализация пустой строки для хода решения
+let solution = '';
+
 /*Факторизация числа*/
 const factorize = (number) => {
+    solution += `1) Факторизация числа p - 1: <br>`;
+    solution += `     p - 1 = ${number} = `;
+
     let rezult = [];
     if(number < 0) {
         rezult.push(-1);
@@ -17,6 +23,14 @@ const factorize = (number) => {
     }
     if(number !== 1) {
         rezult.push({num: number, power: 1});
+    }
+
+    for(let i = 0; i < rezult.length; i++) {
+        if(i !== rezult.length - 1) {
+            solution += `${rezult[i].num}<sup>${rezult[i].power}</sup> ⋅ `
+        } else {
+            solution += `${rezult[i].num}<sup>${rezult[i].power}</sup>`
+        }
     }
     return rezult;
 };
@@ -41,6 +55,8 @@ const modPow = (a, b, p) => {
 
 /*Подсчёт всех r*/
 const count_r = (a, p, factors) => {
+    solution += `<br> <br>`
+    solution += `2) Подсчёт всех r: <br>`; 
     let output = [];
     let temp = [];
     for(let i = 0; i < factors.length; i++) {
@@ -50,15 +66,13 @@ const count_r = (a, p, factors) => {
         output.push(temp);
         temp = [];
     }
-    return output;
-};
 
-/*Наименьшее общее кратное*/
-const gcd = (a, b) => {
-    while(a !== 0 && b !== 0) {
-        a > b ? a -= b : b -= a;
+    for(let i = 0; i < output.length; i++) {
+        for(let j = 0; j < output[i].length; j++) {
+            solution += `     r<sub>${factors[i].num},${j}</sub> = ${a}<sup>${output[i][j].power}</sup>(mod${p}) = ${output[i][j].r} <br>`;
+        }   
     }
-    return Math.max(a, b);
+    return output;
 };
 
 /*Нахождение обратного элемента по модулю*/
@@ -81,6 +95,8 @@ const inverseMod = (x, mod) => {
 
 //Нахождение решения системы сравнений по модулю
 const find_solution = (x_array, factors) => {
+    solution += `<br>`;
+    solution += `4) Решение системы сравнений по модулю: <br>`;
     let mod = 1;
     for(let i = 0; i < factors.length; i++) {
         mod *= Math.pow(factors[i].num, factors[i].power);
@@ -97,15 +113,36 @@ const find_solution = (x_array, factors) => {
     for(let i = 0; i < factors.length; i++) {
         result += (x_array[i] * M_1[i] * M_2[i]);
     }
+
+    solution += `     x = `;
+    for(let i = 0; i < factors.length; i++) {
+        if(i !== factors.length - 1) {
+            solution += `${x_array[i]}⋅${M_1[i]}⋅${M_2[i]} + `;
+        } else {
+            solution += `${x_array[i]}⋅${M_1[i]}⋅${M_2[i]} (mod${mod}) = `;
+        }
+    }
+    solution += `${result % mod}`;
     return result % mod;
 };
 
 //Подсчёт x для каждого q
-const count_x = (a, b, p) => {
-    const factors = factorize(p - 1);
-    const r_array = count_r(a, p, factors);
+const count_x = (a, b, p, factors, r_array) => {
+    solution += `<br>`;
+    solution += `3) Подсчёт промежуточных x: <br>`;
+
     let x_array = [];
     for(let i = 0; i < factors.length; i++) {
+        solution += `  - q = ${factors[i].num}: <br>`;
+        solution += `      x = `;
+        for(let j = 0; j < factors[i].power; j++) {
+            if(j !== factors[i].power - 1) {
+                solution += `${Math.pow(factors[i].num, j)}⋅x<sub>${j}</sub> + `;
+            } else {
+                solution += `${Math.pow(factors[i].num, j)}⋅x<sub>${j}</sub> (mod${Math.pow(factors[i].num, factors[i].power)}) `;
+            }    
+        }
+        solution += `<br>`;
         let temp_x = Array(factors[i].power).fill(0, 0, factors[i].power);
         let counter = 0;
         for(let j = 0; j < factors[i].power; j++) {
@@ -113,18 +150,30 @@ const count_x = (a, b, p) => {
             for(let k = 0; k < factors[i].power; k++) {
                 power += temp_x[k] * Math.pow(factors[i].num, k);
             }
-            z = modPow((b * inverseMod(modPow(a, power, p), p)), (p - 1) / Math.pow(factors[i].num, j + 1), p);
+            let temp_1 = inverseMod(modPow(a, power, p), p);
+            let temp_2 = (p - 1) / Math.pow(factors[i].num, j + 1);
+            let z = modPow((b * temp_1), temp_2, p);
+            solution += `       (${b} ⋅ ${a}<sup>-${power}</sup>)<sup>${p - 1}/${Math.pow(factors[i].num, j + 1)}</sup>(mod${p}) = `;
+            solution += `(${b} ⋅ ${temp_1})<sup>${temp_2}</sup>(mod${p}) = ${z} `;
             for(let k = 0; k < r_array[i].length; k++) {
                 if(z === r_array[i][k].r) {
-                    temp_x[counter] = r_array[i][k].power / ((p - 1) / factors[i].num);
+                    let temp_3 = r_array[i][k].power / ((p - 1) / factors[i].num);
+                    temp_x[counter] = temp_3;
+                    solution += `=> x<sub>${j}</sub> = ${r_array[i][k].power} / ${(p - 1) / factors[i].num} = ${temp_3} <br>`
                     break;
                 }
-            }
+            }  
             counter++;
         }
+        solution += `      x = `;
         let x = 0;
         for(let j = 0; j < temp_x.length; j++) {
             x += temp_x[j] * Math.pow(factors[i].num, j);
+            if(j !== temp_x.length - 1) {
+                solution += `${Math.pow(factors[i].num, j)}⋅${temp_x[j]} + `;
+            } else {
+                solution += `${Math.pow(factors[i].num, j)}⋅${temp_x[j]} (mod${Math.pow(factors[i].num, factors[i].power)}) = ${x} <br>`;
+            }  
         }
         x_array.push(x % Math.pow(factors[i].num, factors[i].power));
     }
@@ -133,7 +182,11 @@ const count_x = (a, b, p) => {
 
 //Алгоритм
 const SPH = (a, b, p) => {
-    return find_solution(count_x(a, b, p), factorize(p - 1));
+    const factors = factorize(p - 1);
+    const r_array = count_r(a, p, factors);
+    const x_array = count_x(a, b, p, factors, r_array);
+    const answer = find_solution(x_array, factors);
+    return answer;
 };
 
 document.getElementById('submit').onclick = (event) => {
@@ -142,5 +195,12 @@ document.getElementById('submit').onclick = (event) => {
     const b = Number(document.getElementById('b').value);
     const p = Number(document.getElementById('p').value);
 
-    document.getElementById('result_text').innerHTML = `x = ${SPH(a, b, p)}`;
+    if(a && b && p) {
+        const x = SPH(a, b, p);
+        document.getElementById('solution').innerHTML = `<center><b>Ход решения:</b></center> <br>${solution}`;
+        solution = '';
+        document.getElementById('result_text').innerHTML = `Ответ: x = ${x}`;
+    } else {
+        return;
+    }
 };
