@@ -39,7 +39,7 @@ body {
     padding: 5px 10px 5px 10px;
 }
 
-.solution-header, .answer-header {
+.solution-header, .result-header {
     text-align: center;
 }
 
@@ -48,16 +48,12 @@ body {
     white-space: pre-wrap;
 }
 
-.result {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 50px;
+.result-text {
+    padding: 5px 15px 5px 15px;
 }
 
 .result-text {
     font-size: 1.5em;
-    margin: 0;
 }
 
 @media screen and (max-width: 426px) {
