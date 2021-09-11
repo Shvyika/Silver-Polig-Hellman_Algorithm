@@ -229,13 +229,14 @@ document.getElementById('submit').onclick = (event) => {
     const b = Number(document.getElementById('b').value);
     const p = Number(document.getElementById('p').value);
 
-    if(a && b && p) {
-        const x = SPH(a, b, p);
-        document.getElementById('solution_text').innerHTML = solution;
-        solution = '';
-        document.getElementById('result_text').innerHTML = `Ответ: x = ${x}`;
-    } else {
+    if(!a || !b || !p) {
         alert('Заполните поля!');
         return;
     }
+
+    const x = SPH(a, b, p);
+    document.getElementById('solution-text').innerHTML = solution;
+    solution = '';
+    document.getElementById('result-text').innerHTML = `x = ${x}`;
+
 };

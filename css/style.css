@@ -18,7 +18,7 @@ body {
     text-align: center;
 }
 
-.formula {
+.task {
     text-align: center;
     font-size: 1.4em;
 }
@@ -39,11 +39,11 @@ body {
     padding: 5px 10px 5px 10px;
 }
 
-.solution_header {
+.solution-header, .answer-header {
     text-align: center;
 }
 
-.solution_text {
+.solution-text {
     padding: 5px 15px 5px 15px;
     white-space: pre-wrap;
 }
@@ -55,7 +55,7 @@ body {
     height: 50px;
 }
 
-.result_text {
+.result-text {
     font-size: 1.5em;
     margin: 0;
 }
